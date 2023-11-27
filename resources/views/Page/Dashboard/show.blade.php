@@ -2,7 +2,7 @@
 @section('content')
 <div class="main-panel">
     <div class="content-wrapper">
-<h1>test</h1>
+<h1>test ini</h1>
     </div>
 </div>
 
