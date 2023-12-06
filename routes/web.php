@@ -5,7 +5,8 @@ use App\Http\Controllers\{
     homeController,
     KategoriController,
     BarangController,
-    AuthController
+    AuthController,
+    WebController
 };
 
 /*
@@ -19,6 +20,12 @@ use App\Http\Controllers\{
 |
 */
 
+// WEBSITE
+
+
+
+
+
 // LOGIN ADMIN
 Route::post('/registrasi', [\App\Http\Controllers\RegisterController::class, 'register'])->name('daftar');
 Route::middleware('guest')->get('/daftar', [\App\Http\Controllers\RegisterController::class, 'daftar'])->name('daftar');
@@ -28,6 +35,9 @@ Route::middleware('guest')->get('/login', [AuthController::class, 'halamanlogin'
 Route::get('/login/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/postlogin', [AuthController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/web', [WebController::class, 'show']);
+
 
 route::group(['middleware' => ['auth']], function () {
     Route::get('/home', [homeController::class, 'show'])->name('home');
