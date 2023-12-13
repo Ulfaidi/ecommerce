@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Models\Kategori;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -11,11 +12,11 @@ class KategoriController extends Controller
     public function show()
     {
         $kategoris = Kategori::all(); // Ambil semua data kategori dari model Kategori
-        return view('Page.Kategori.show')->with('kategoris', $kategoris);
+        return view('Admin.Kategori.show')->with('kategoris', $kategoris);
     }
     public function create()
     {
-        return view('Page.Kategori.create');
+        return view('Admin.Kategori.create');
     }
 
     public function store(Request $request)
@@ -35,7 +36,7 @@ class KategoriController extends Controller
     public function edit($id)
     {
         $kategori = Kategori::find($id);
-        return view('Page.Kategori.edit', compact('kategori'));
+        return view('Admin.Kategori.edit', compact('kategori'));
     }
 
     public function update(Request $request, $id)

@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     homeController,
-    KategoriController,
-    BarangController,
+    Admin\KategoriController,
+    Admin\ProdukController,
     AuthController,
     WebController
 };
@@ -45,7 +45,6 @@ route::group(['middleware' => ['auth']], function () {
 
 
 Route::group([
-    'middleware' =>  ["auth"],
     'prefix' => "kategori"
 ], function ($router) {
     Route::get('/', [KategoriController::class, 'show']);
@@ -57,13 +56,12 @@ Route::group([
 });
 
 Route::group([
-    'middleware' =>  ["auth"],
-    'prefix' => "barang"
+    'prefix' => "produk"
 ], function ($router) {
-    Route::get('/', [BarangController::class, 'show']);
-    Route::get('/create', [BarangController::class, 'create']);
-    Route::post('/store', [BarangController::class, 'store']);
-    Route::get('/{id}/edit', [BarangController::class, 'edit']);
-    Route::put('/{id}', [BarangController::class, 'update']);
-    Route::get('/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+    Route::get('/', [ProdukController::class, 'show']);
+    Route::get('/create', [ProdukController::class, 'create']);
+    Route::post('/store', [ProdukController::class, 'store']);
+    Route::get('/{id}/edit', [ProdukController::class, 'edit']);
+    Route::put('/{id}', [ProdukController::class, 'update']);
+    Route::get('/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
 });
