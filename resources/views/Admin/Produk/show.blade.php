@@ -12,11 +12,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Gambar</th>
                 <th>Thumbnail</th>
-                <th>Detail1</th>
-                <th>Detail2</th>
-                <th>Detail3</th>
                 <th>Stok</th>
                 <th>Harga</th>
                 <th>Aksi</th>
@@ -31,49 +27,18 @@
                     <td>{{ $counter++ }}</td>
                     <td>{{ $produk->nama }}</td>
                     <td>
-                        @if ($produk->gambar)
-                            <button type="button" class="btn btn-info btn-sm"
-                                onclick="showImage('{{ asset('public/gambar/' . $produk->gambar) }}')">Cek
-                                Gambar</button>
-                        @else
-                            Kosong
-                        @endif
-                    </td>
-                    <td>
                         @if ($produk->thumbnail)
-                            <button type="button" class="btn btn-info btn-sm"
-                                onclick="showImage('{{ asset('public/gambar/' . $produk->thumbnail) }}')">Cek
-                            </button>
-                        @else
-                            Kosong
-                        @endif
-                    </td>
-                    <td>
-                        @if ($produk->gambar_detail1)
-                            <button type="button" class="btn btn-info btn-sm"
-                                onclick="showImage('{{ asset('public/gambar/' . $produk->gambar_detail1) }}')">Cek
-                            </button>
-                        @else
-                            Kosong
-                        @endif
-                    </td>
-                    <td>
-                        @if ($produk->gambar_detail2)
-                            <button type="button" class="btn btn-info btn-sm"
-                                onclick="showImage('{{ asset('public/gambar/' . $produk->gambar_detail2) }}')">Cek
-                            </button>
-                        @else
-                            Kosong
-                        @endif
-                    </td>
-                    <td>
-                        @if ($produk->gambar_detail3)
-                            <button type="button" class="btn btn-info btn-sm"
-                                onclick="showImage('{{ asset('public/gambar/' . $produk->gambar_detail3) }}')">Cek
-                            </button>
-                        @else
-                            Kosong
-                        @endif
+                        <button type="button" class="btn btn-info btn-sm"
+                            onclick="showImages([
+                                '{{ asset('public/gambar/' . $produk->thumbnail) }}',
+                                '{{ asset('public/gambar/' . $produk->gambar_detail1) }}',
+                                '{{ asset('public/gambar/' . $produk->gambar_detail2) }}',
+                                '{{ asset('public/gambar/' . $produk->gambar_detail3) }}'
+                            ])">Cek
+                        </button>
+                    @else
+                        Kosong
+                    @endif
                     </td>
                     <td>{{ $produk->stok }}</td>
                     <td>{{ $produk->harga }}</td>
@@ -90,11 +55,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Gambar</th>
                 <th>Thumbnail</th>
-                <th>Detail1</th>
-                <th>Detail2</th>
-                <th>Detail3</th>
                 <th>Stok</th>
                 <th>Harga</th>
                 <th>Aksi</th>
@@ -125,10 +86,11 @@
             });
         }
 
-        function showImage(imageUrl) {
+        function showImages(imageUrls) {
             Swal.fire({
-                imageUrl: imageUrl,
-                imageAlt: 'Gambar Produk'
+                html: imageUrls.map(url => `<img src="${url}" class="img-fluid">`).join(''),
+                showCloseButton: true,
+                showConfirmButton: false,
             });
         }
     </script>

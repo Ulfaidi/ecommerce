@@ -32,7 +32,6 @@ class ProdukController extends Controller
             'stok' => 'required|numeric',
             'harga' => 'required|numeric',
             'kategori_id' => 'required|exists:kategori,id',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gambar_detail1' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gambar_detail2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -45,14 +44,6 @@ class ProdukController extends Controller
             'harga' => $validatedData['harga'],
             'kategori_id' => $validatedData['kategori_id'],
         ];
-
-        // Simpan file gambar jika ada
-        if ($request->hasFile('gambar')) {
-            $gambarFile = $request->file('gambar');
-            $gambarFileName = time() . '_gambar_' . $gambarFile->getClientOriginalName();
-            $gambarFile->storeAs('gambar', $gambarFileName, 'public');
-            $data['gambar'] = $gambarFileName;
-        }
 
         // Cek dan simpan thumbnail jika ada
         if ($request->hasFile('thumbnail')) {
@@ -121,7 +112,6 @@ class ProdukController extends Controller
             'stok' => 'required|numeric',
             'harga' => 'required|numeric',
             'kategori_id' => 'required|exists:kategori,id',
-            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gambar_detail1' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gambar_detail2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -137,8 +127,8 @@ class ProdukController extends Controller
         $produk->kategori_id = $validatedData['kategori_id'];
 
         // Hapus gambar lama jika ada
-        if ($produk->gambar) {
-            Storage::disk('public')->delete('gambar/' . $produk->gambar);
+        if ($produk->thumbnail) {
+            Storage::disk('public')->delete('thumbnail/' . $produk->thumbnail);
         }
 
         // Simpan thumbnail
@@ -159,16 +149,6 @@ class ProdukController extends Controller
         // Simpan gambar detail 3
         if ($request->hasFile('gambar_detail3')) {
             $data['gambar_detail3'] = $this->uploadImage($request->file('gambar_detail3'));
-        }
-
-
-        // Jika gambar baru diunggah, proses gambar
-        if ($request->hasFile('gambar')) {
-            $file = $request->file('gambar');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('gambar', $fileName, 'public');
-            // Simpan nama file ke database atau proses lainnya
-            $produk->gambar = $fileName;
         }
 
         $produk->save();

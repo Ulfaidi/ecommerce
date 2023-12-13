@@ -31,11 +31,6 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="gambar">Gambar:</label>
-                        <input type="file" class="form-control" id="gambar" name="gambar">
-                    </div>
-
-                    <div class="form-group">
                         <label for="thumbnail">Thumbnail:</label>
                         <input type="file" class="form-control" id="thumbnail" name="thumbnail">
                     </div>

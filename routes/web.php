@@ -45,7 +45,7 @@ route::group(['middleware' => ['auth']], function () {
 
 
 Route::group([
-    'middleware' => ['auth'],
+    // 'middleware' => ['auth'],
     'prefix' => "kategori"
 ], function ($router) {
     Route::get('/', [KategoriController::class, 'show']);
@@ -57,7 +57,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth'],
+    // 'middleware' => ['auth'],
     'prefix' => "produk"
 ], function ($router) {
     Route::get('/', [ProdukController::class, 'show']);
