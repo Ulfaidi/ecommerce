@@ -37,53 +37,54 @@ class ProdukController extends Controller
             'gambar_detail2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'gambar_detail3' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         $data = [
             'nama' => $validatedData['nama'],
             'stok' => $validatedData['stok'],
             'harga' => $validatedData['harga'],
             'kategori_id' => $validatedData['kategori_id'],
         ];
-
+    
         // Cek dan simpan thumbnail jika ada
         if ($request->hasFile('thumbnail')) {
             $thumbnailFile = $request->file('thumbnail');
             $thumbnailFileName = time() . '_thumb_' . $thumbnailFile->getClientOriginalName();
-            $thumbnailFile->storeAs('gambar', $thumbnailFileName, 'public');
+            $thumbnailFile->storeAs('public/gambar', $thumbnailFileName);
             $data['thumbnail'] = $thumbnailFileName;
         }
-
+    
         // Cek dan simpan gambar detail 1 jika ada
         if ($request->hasFile('gambar_detail1')) {
             $gambarDetail1File = $request->file('gambar_detail1');
             $gambarDetail1FileName = time() . '_detail1_' . $gambarDetail1File->getClientOriginalName();
-            $gambarDetail1File->storeAs('gambar', $gambarDetail1FileName, 'public');
+            $gambarDetail1File->storeAs('public/gambar', $gambarDetail1FileName);
             $data['gambar_detail1'] = $gambarDetail1FileName;
         }
-
+    
         // Cek dan simpan gambar detail 2 jika ada
         if ($request->hasFile('gambar_detail2')) {
             $gambarDetail2File = $request->file('gambar_detail2');
             $gambarDetail2FileName = time() . '_detail2_' . $gambarDetail2File->getClientOriginalName();
-            $gambarDetail2File->storeAs('gambar', $gambarDetail2FileName, 'public');
+            $gambarDetail2File->storeAs('public/gambar', $gambarDetail2FileName);
             $data['gambar_detail2'] = $gambarDetail2FileName;
         }
-
+    
         // Cek dan simpan gambar detail 3 jika ada
         if ($request->hasFile('gambar_detail3')) {
             $gambarDetail3File = $request->file('gambar_detail3');
             $gambarDetail3FileName = time() . '_detail3_' . $gambarDetail3File->getClientOriginalName();
-            $gambarDetail3File->storeAs('gambar', $gambarDetail3FileName, 'public');
+            $gambarDetail3File->storeAs('public/gambar', $gambarDetail3FileName);
             $data['gambar_detail3'] = $gambarDetail3FileName;
         }
-
+    
         // Simpan data ke dalam database
         Produk::create($data);
-
+    
         Alert::success('Sukses!', 'Produk berhasil disimpan.');
-
+    
         return redirect('/produk');
     }
+    
 
     public function destroy($id)
     {
