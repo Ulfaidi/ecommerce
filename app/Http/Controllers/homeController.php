@@ -8,6 +8,6 @@ class homeController extends Controller
 {
     public function show()
     {
-        return view('Page.Dashboard.show');
+        return view('Admin.Dashboard.show');
     }
 }

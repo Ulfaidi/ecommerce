@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('assets') }}/images/favicon.png" />
+    <!-- Option 1: Include in HTML -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <!-- Sertakan file CSS dan JS Dropzone -->
+
+    @yield('style')
 </head>
 
 <body>
@@ -86,7 +91,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-    
+
     <script>
         new DataTable('#example', {
             responsive: true

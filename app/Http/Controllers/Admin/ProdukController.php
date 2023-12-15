@@ -27,64 +27,46 @@ class ProdukController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'nama' => 'required|max:255',
-            'stok' => 'required|numeric',
-            'harga' => 'required|numeric',
-            'kategori_id' => 'required|exists:kategori,id',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar_detail1' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar_detail2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar_detail3' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-    
-        $data = [
-            'nama' => $validatedData['nama'],
-            'stok' => $validatedData['stok'],
-            'harga' => $validatedData['harga'],
-            'kategori_id' => $validatedData['kategori_id'],
-        ];
-    
-        // Cek dan simpan thumbnail jika ada
+        $gambarDetail = [];
+        $thumbnailPath = null;
+
+        // Upload gambar_detail
+        if ($files = $request->file('gambar_detail')) {
+            foreach ($files as $file) {
+                $image_name = md5(rand(1000, 10000));
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_fullname = $image_name . '.' . $ext;
+                $upload_path = 'uploads/gambar/';
+                $image_url = $upload_path . $image_fullname;
+                $file->move($upload_path, $image_fullname);
+                $gambarDetail[] = $image_url;
+            }
+        }
+
+        // Upload thumbnail
         if ($request->hasFile('thumbnail')) {
-            $thumbnailFile = $request->file('thumbnail');
-            $thumbnailFileName = time() . '_thumb_' . $thumbnailFile->getClientOriginalName();
-            $thumbnailFile->storeAs('public/gambar', $thumbnailFileName);
-            $data['thumbnail'] = $thumbnailFileName;
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailName = md5(rand(1000, 10000)) . '.' . $thumbnail->getClientOriginalExtension();
+            $thumbnail->move('uploads/gambar/', $thumbnailName);
+            $thumbnailPath = 'uploads/gambar/' . $thumbnailName;
         }
-    
-        // Cek dan simpan gambar detail 1 jika ada
-        if ($request->hasFile('gambar_detail1')) {
-            $gambarDetail1File = $request->file('gambar_detail1');
-            $gambarDetail1FileName = time() . '_detail1_' . $gambarDetail1File->getClientOriginalName();
-            $gambarDetail1File->storeAs('public/gambar', $gambarDetail1FileName);
-            $data['gambar_detail1'] = $gambarDetail1FileName;
-        }
-    
-        // Cek dan simpan gambar detail 2 jika ada
-        if ($request->hasFile('gambar_detail2')) {
-            $gambarDetail2File = $request->file('gambar_detail2');
-            $gambarDetail2FileName = time() . '_detail2_' . $gambarDetail2File->getClientOriginalName();
-            $gambarDetail2File->storeAs('public/gambar', $gambarDetail2FileName);
-            $data['gambar_detail2'] = $gambarDetail2FileName;
-        }
-    
-        // Cek dan simpan gambar detail 3 jika ada
-        if ($request->hasFile('gambar_detail3')) {
-            $gambarDetail3File = $request->file('gambar_detail3');
-            $gambarDetail3FileName = time() . '_detail3_' . $gambarDetail3File->getClientOriginalName();
-            $gambarDetail3File->storeAs('public/gambar', $gambarDetail3FileName);
-            $data['gambar_detail3'] = $gambarDetail3FileName;
-        }
-    
-        // Simpan data ke dalam database
-        Produk::create($data);
-    
+
+        // Simpan data ke database
+        Produk::create([
+            'gambar_detail' => implode('|', $gambarDetail),
+            'thumbnail' => $thumbnailPath,
+            'nama' => $request->nama,
+            'stok' => $request->stok,
+            'harga' => $request->harga,
+            'kategori_id' => $request->kategori_id,
+        ]);
+
         Alert::success('Sukses!', 'Produk berhasil disimpan.');
-    
+
         return redirect('/produk');
     }
-    
+
+
 
     public function destroy($id)
     {

@@ -16,13 +16,11 @@ return new class extends Migration
         Schema::create('produk', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('thumbnail')->nullable(); 
-            $table->string('gambar_detail1')->nullable();  
-            $table->string('gambar_detail2')->nullable(); 
-            $table->string('gambar_detail3')->nullable();
             $table->integer('stok');
             $table->decimal('harga', 10, 2);
             $table->unsignedBigInteger('kategori_id');
+            $table->string('thumbnail')->nullable(); 
+            $table->longText('gambar_detail')->nullable(); 
             $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
             $table->timestamps();
         });
