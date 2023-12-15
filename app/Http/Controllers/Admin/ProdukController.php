@@ -58,7 +58,7 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'stok' => $request->stok,
             'harga' => $request->harga,
-            'kategori_id' => $request->kategori_id,
+            'kategori_id' => $request->kategori_id
         ]);
 
         Alert::success('Sukses!', 'Produk berhasil disimpan.');
@@ -70,7 +70,23 @@ class ProdukController extends Controller
 
     public function destroy($id)
     {
-        $produk = Produk::findOrFail($id);
+        // Ambil data produk berdasarkan ID
+        $produk = Produk::find($id);
+
+        // Hapus file gambar_detail
+        $gambarDetail = explode('|', $produk->gambar_detail);
+        foreach ($gambarDetail as $gambar) {
+            if (file_exists(public_path($gambar))) {
+                unlink(public_path($gambar));
+            }
+        }
+
+        // Hapus file thumbnail
+        if (file_exists(public_path($produk->thumbnail))) {
+            unlink(public_path($produk->thumbnail));
+        }
+
+        // Hapus record produk dari database
         $produk->delete();
 
         // Tampilkan SweetAlert
@@ -89,55 +105,63 @@ class ProdukController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi input form
-        $validatedData = $request->validate([
-            'nama' => 'required|max:255',
-            'stok' => 'required|numeric',
-            'harga' => 'required|numeric',
-            'kategori_id' => 'required|exists:kategori,id',
-            'thumbnail' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar_detail1' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar_detail2' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar_detail3' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $produk = Produk::find($id);
 
-        $produk = Produk::findOrFail($id);
-
-        // Update data
-        $produk->nama = $validatedData['nama'];
-        $produk->stok = $validatedData['stok'];
-        $produk->harga = $validatedData['harga'];
-        $produk->kategori_id = $validatedData['kategori_id'];
-
-        // Hapus gambar lama jika ada
-        if ($produk->thumbnail) {
-            Storage::disk('public')->delete('thumbnail/' . $produk->thumbnail);
-        }
-
-        // Simpan thumbnail
+        // Hapus file gambar_detail lama
         if ($request->hasFile('thumbnail')) {
-            $data['thumbnail'] = $this->uploadImage($request->file('thumbnail'));
+            if (file_exists(public_path($produk->thumbnail))) {
+                unlink(public_path($produk->thumbnail));
+            }
         }
 
-        // Simpan gambar detail 1
-        if ($request->hasFile('gambar_detail1')) {
-            $data['gambar_detail1'] = $this->uploadImage($request->file('gambar_detail1'));
+        // Hapus file thumbnail lama
+        if ($request->hasFile('gambar_detail')) {
+            $gambarDetail = explode('|', $produk->gambar_detail);
+            foreach ($gambarDetail as $gambar) {
+                if (file_exists(public_path($gambar))) {
+                    unlink(public_path($gambar));
+                }
+            }
         }
 
-        // Simpan gambar detail 2
-        if ($request->hasFile('gambar_detail2')) {
-            $data['gambar_detail2'] = $this->uploadImage($request->file('gambar_detail2'));
+        // Upload gambar_detail baru
+        $gambarDetail = [];
+        if ($files = $request->file('gambar_detail')) {
+            foreach ($files as $file) {
+                $image_name = md5(rand(1000, 10000));
+                $ext = strtolower($file->getClientOriginalExtension());
+                $image_fullname = $image_name . '.' . $ext;
+                $upload_path = 'uploads/gambar/';
+                $image_url = $upload_path . $image_fullname;
+                $file->move($upload_path, $image_fullname);
+                $gambarDetail[] = $image_url;
+            }
         }
 
-        // Simpan gambar detail 3
-        if ($request->hasFile('gambar_detail3')) {
-            $data['gambar_detail3'] = $this->uploadImage($request->file('gambar_detail3'));
+        // Upload thumbnail baru
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailName = md5(rand(1000, 10000)) . '.' . $thumbnail->getClientOriginalExtension();
+            $thumbnail->move('uploads/gambar/', $thumbnailName);
+            $thumbnailPath = 'uploads/gambar/' . $thumbnailName;
+
+            // Simpan data ke database
+            $produk->update([
+                'gambar_detail' => implode('|', $gambarDetail),
+                'thumbnail' => $thumbnailPath,
+                'nama' => $request->nama,
+                'stok' => $request->stok,
+                'harga' => $request->harga,
+                'kategori_id' => $request->kategori_id
+            ]);
+
+            Alert::success('Sukses!', 'Produk berhasil diperbarui.');
+
+            return redirect('/produk');
         }
 
-        $produk->save();
+        Alert::error('Gagal!', 'Gagal mengupload gambar.');
 
-        Alert::success('Sukses!', 'Produk berhasil diperbarui!');
-
-        return redirect('/produk');
+        return back();
     }
 }

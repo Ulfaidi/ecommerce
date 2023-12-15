@@ -28,18 +28,19 @@
                     <td>{{ $produk->nama }}</td>
                     <td>
                         @if ($produk->thumbnail)
-                        <button type="button" class="btn btn-info btn-sm"
-                            onclick="showImages([
-                                '{{ asset('public/gambar/' . $produk->thumbnail) }}',
-                                '{{ asset('public/gambar/' . $produk->gambar_detail1) }}',
-                                '{{ asset('public/gambar/' . $produk->gambar_detail2) }}',
-                                '{{ asset('public/gambar/' . $produk->gambar_detail3) }}'
-                            ])">Cek
-                        </button>
-                    @else
-                        Kosong
-                    @endif
+                            <button type="button" class="btn btn-info btn-sm"
+                                onclick="showImages([
+                                    '{{ asset($produk->thumbnail) }}',
+                                    @if ($produk->gambar_detail) @foreach (explode('|', $produk->gambar_detail) as $gambar)
+                                            '{{ asset($gambar) }}',
+                                        @endforeach @endif
+                                ])">Cek
+                            </button>
+                        @else
+                            Kosong
+                        @endif
                     </td>
+
                     <td>{{ $produk->stok }}</td>
                     <td>{{ $produk->harga }}</td>
                     <td>
