@@ -22,6 +22,8 @@ class User extends Authenticatable
         'username',
         'password',
         'role',
+        'nomor_telepon', // tambahan sesuai migrasi
+        'email', // tambahan sesuai migrasi
     ];
 
     /**
@@ -36,10 +38,18 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
+     * 
      * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the customer record associated with the user.
+     */
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
 }

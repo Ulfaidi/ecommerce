@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Produk;
 use App\Models\Kategori;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Storage;
 
 class ProdukController extends Controller
 {

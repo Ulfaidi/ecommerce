@@ -25,17 +25,21 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="/customer">
+                <i class="icon-head menu-icon"></i>
+                <span class="menu-title">Customers</span>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="/orders">
                 <i class="icon-grid menu-icon"></i>
                 <span class="menu-title">Pesanan</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/settings">
-                <div class="preview-icon">
-                    <i class="ti-settings"></i>
-                    <span class="menu-title">Pengaturan</span>
-                </div>
+            <a class="nav-link" href="/orders">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Pengaturan</span>
             </a>
         </li>
         <li class="nav-item">

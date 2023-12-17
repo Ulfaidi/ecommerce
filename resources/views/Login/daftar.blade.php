@@ -29,39 +29,53 @@
                             <div class="brand-logo">
                                 <img src="{{ asset('assets') }}/images/logo.svg" alt="logo">
                             </div>
-                            <h4>New here?</h4>
-                            <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
-                            <form action="/registrasi" method="post" class="pt-3">
+                            <h4>Baru disini?</h4>
+                            <h6 class="font-weight-light">Mendaftar sangat mudah. Hanya memerlukan beberapa langkah</h6>
+                            <form action="{{ url('/register/store') }}" method="post" class="pt-3">
                                 @csrf
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="nama"
-                                        name="nama" placeholder="Nama" required>
+                                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" value="{{ old('nama') }}" required>
                                 </div>
+                            
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="username"
-                                        name="username" placeholder="Username" required>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" value="{{ old('username') }}" required>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="{{ old('username') }}" required>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password" required>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="nomor_telepon" name="nomor_telepon" placeholder="Nomor Telepon" value="{{ old('nomor_telepon') }}">
+                                </div>
+                            
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ old('email') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg" id="password"
-                                        name="password" placeholder="Password" required>
+                                    <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat">{{ old('alamat') }}</textarea>
                                 </div>
+                                
                                 <div class="mt-3">
                                     <button class="btn btn-block btn-warning btn-lg font-weight-medium auth-form-btn"
-                                        type="submit">SIGN UP</button>
+                                        type="submit">DAFTAR</button>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light">
-                                    Already have an account? <a href="/login" class="text-primary">Login</a>
+                                    Sudah memiliki akun? <a href="/login" class="text-primary">Login</a>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- content-wrapper ends -->
         </div>
-        <!-- page-body-wrapper ends -->
     </div>
+
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="{{ asset('assets') }}/vendors/js/vendor.bundle.base.js"></script>
