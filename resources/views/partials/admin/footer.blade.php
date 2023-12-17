@@ -1,15 +1,30 @@
-<footer class="footer">
-    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023.
-            Premium <a href="{{ asset('assets') }}/https://www.bootstrapdash.com/"
-                target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights
-            reserved.</span>
-        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
-            with <i class="ti-heart text-danger ml-1"></i></span>
+<footer class="content-footer footer bg-footer-theme">
+    <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+      <div class="mb-2 mb-md-0">
+        ©
+        <script>
+            document.write(new Date().getFullYear());
+        </script>
+        , made with ❤️ by
+        <a href="{{ asset('assets') }}/https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
+      </div>
+      <div>
+        <a href="{{ asset('assets') }}/https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+        <a href="{{ asset('assets') }}/https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+
+        <a
+          href="{{ asset('assets') }}/https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+          target="_blank"
+          class="footer-link me-4"
+          >Documentation</a
+        >
+
+        <a
+          href="{{ asset('assets') }}/https://github.com/themeselection/sneat-html-admin-template-free/issues"
+          target="_blank"
+          class="footer-link me-4"
+          >Support</a
+        >
+      </div>
     </div>
-    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Distributed by <a
-                href="{{ asset('assets') }}/https://www.themewagon.com/"
-                target="_blank">Themewagon</a></span>
-    </div>
-</footer>
+  </footer>
