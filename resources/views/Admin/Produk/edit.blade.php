@@ -37,9 +37,20 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="size">Size:</label>
+                        <input type="text" class="form-control" id="size" name="size"
+                            value="{{ $produk->size }}">
+                    </div>
                 </div>
 
                 <div class="col-md-6">
+
+
+                    <div class="form-group">
+                        <label for="deskripsi">Deskripsi:</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi">{{ $produk->deskripsi }}</textarea>
+                    </div>
                     <div class="row">
                         <!-- Thumbnail -->
                         <div class="col-md-6">
@@ -69,6 +80,7 @@
 
                         {{-- Detail --}}
                         <div class="col-md-6">
+
                             <div class="card">
                                 <div class="top">
                                     <p>Detail Produk</p>

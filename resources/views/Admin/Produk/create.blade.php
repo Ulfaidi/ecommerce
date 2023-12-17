@@ -31,9 +31,20 @@
                             @endforeach
                         </select>
                     </div>
+
                 </div>
 
                 <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="size">Size:</label>
+                        <input type="text" class="form-control" id="size" name="size">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="deskripsi">Deskripsi:</label>
+                        <textarea class="form-control" id="deskripsi" name="deskripsi"></textarea>
+                    </div>
+
                     <div class="row">
                         <!-- Thumbnail -->
                         <div class="col-md-6">

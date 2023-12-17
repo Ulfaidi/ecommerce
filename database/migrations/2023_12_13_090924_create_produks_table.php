@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('thumbnail')->nullable();
             $table->longText('gambar_detail')->nullable();
             $table->string('size')->nullable();
-            $table->text('deskripsi')->nullable();
+            $table->text('deskripsi');
             $table->foreign('kategori_id')->references('id')->on('kategori')->onDelete('cascade');
             $table->timestamps();
         });

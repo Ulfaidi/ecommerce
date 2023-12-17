@@ -15,6 +15,7 @@
                 <th>Thumbnail</th>
                 <th>Stok</th>
                 <th>Harga</th>
+                <th>Size</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -43,6 +44,7 @@
 
                     <td>{{ $produk->stok }}</td>
                     <td>{{ $produk->harga }}</td>
+                    <td>{{ $produk->size }}</td>
                     <td>
                         <a onclick="deleteProduk({{ $produk->id }})" class="btn btn-danger btn-sm">Hapus</a>
                         <a href="{{ url('/produk/' . $produk->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
@@ -59,6 +61,7 @@
                 <th>Thumbnail</th>
                 <th>Stok</th>
                 <th>Harga</th>
+                <th>Size</th>
                 <th>Aksi</th>
             </tr>
         </tfoot>
