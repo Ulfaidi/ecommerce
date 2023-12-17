@@ -58,6 +58,8 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'stok' => $request->stok,
             'harga' => $request->harga,
+            'size' => $request->size,
+            'deskripsi' => $request->deskripsi,
             'kategori_id' => $request->kategori_id
         ]);
 
@@ -152,6 +154,8 @@ class ProdukController extends Controller
                 'nama' => $request->nama,
                 'stok' => $request->stok,
                 'harga' => $request->harga,
+                'size' => $request->size,
+                'deskripsi' => $request->deskripsi,
                 'kategori_id' => $request->kategori_id
             ]);
 
